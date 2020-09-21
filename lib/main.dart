@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'club.dart';
+import 'admin_page.dart';
 
 
 void main() => runApp(MyApp());
@@ -68,13 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           centerTitle: true,
           backgroundColor: Color(0xff0a49a5),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () { print("to do Accès administrateur");},
-              icon: Icon(Icons.settings),
-              color: Colors.white,
-            )
-          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -82,19 +76,32 @@ class _MyHomePageState extends State<MyHomePage> {
               UserAccountsDrawerHeader(
                 accountName: Text("Développeur: Aaron Centeno"),
                 accountEmail: Text("Contact: aaron.centeno@outlook.com")
+              ),
+              ListTile(
+                title: Text('Accès administrateur'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (BuildContext context) => new AdminPage() 
+                  ));
+                }
               )
             ],
           ),
         ),
         body: Center(
-          child: Card(
-            child: ListView.builder(
-              itemCount: this.clubName.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(this.clubName[index]);
-              },
-            ),
-          ),
+          child: Column(
+            children: <Widget>[
+              // Row(),
+              Card(
+                child: ListView.builder(
+                  itemCount: this.clubName.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Text(this.clubName[index]);
+                  },
+                ),
+              ),
+            ],
+          )
         ),// This trailing comma makes auto-formatting nicer for build methods.
       );
     }
