@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> clubName = [];
   List<Club> clubs = List();
+  String currentPage = 'blog';
+
 
   void initState() {
     super.initState();
@@ -61,6 +63,71 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void managePage(String page) {
+    this.setState(() {
+      this.currentPage = page;
+    });
+
+    print(this.currentPage);
+  }
+
+  Color setColor(String page) {
+    if (this.currentPage == page) {
+      return Color(0xff0a49a5);
+    } else {
+      return Color(0xffffffff);
+    }
+  }
+
+  Text setText(String page) {
+    if (page == this.currentPage) {
+      if (page == "result") {
+        return (Text("Résultats", 
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+        ));
+      } else {
+        return (Text("Blog du FCM", 
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+        ));
+      }
+    } else {
+      if (page == "result") {
+        return (Text("Résultats", 
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ));
+      } else {
+        return (Text("Blog du FCM", 
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ));
+      }
+    }
+  }
+
+  Container displayContent() {
+    if (this.currentPage == "result") {
+      return (
+        Container(
+          height: 300,
+          child: ListView.builder(
+            itemCount: this.clubName.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(this.clubName[index]);
+            },
+          ),
+        )
+      );
+    } else {
+      return Container(
+        height: 300,
+        child: Text('Do the blog part')
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (this.clubName.length > 0) {
@@ -75,7 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text("Développeur: Aaron Centeno"),
-                accountEmail: Text("Contact: aaron.centeno@outlook.com")
+                accountEmail: Text("Contact: aaron.centeno@outlook.com"),
+                currentAccountPicture: CircleAvatar(
+                  child: Image.asset('assets/images/logo_fcm.jpg'),
+                ),
               ),
               ListTile(
                 title: Text('Accès administrateur'),
@@ -91,15 +161,46 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: <Widget>[
-              // Row(),
-              Card(
-                child: ListView.builder(
-                  itemCount: this.clubName.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Text(this.clubName[index]);
-                  },
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 0.5
+                    )
+                  )
                 ),
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () { this.managePage('blog'); },
+                        child: Container(
+                          color: this.setColor('blog'),
+                          child: Center(
+                            child: this.setText('blog')
+                          )
+                        ),                        
+                      )
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () { this.managePage('result'); },
+                        child: Container(
+                          color: this.setColor('result'),
+                          child: Center(
+                            child: this.setText('result')
+                          )
+                        ),                        
+                      )
+                    )
+                  ],
+                )
               ),
+              SizedBox(height: 50),
+              this.displayContent()
             ],
           )
         ),// This trailing comma makes auto-formatting nicer for build methods.
