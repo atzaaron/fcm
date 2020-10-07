@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class Results extends StatefulWidget {
@@ -60,7 +61,18 @@ class _ResultsState extends State<Results> {
       );      
     }
     return (
-      Text('waiting ...')
+      Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SpinKitDoubleBounce(
+              color: Color(0xff0a49a5)
+            ),
+            SizedBox(height: 20),
+            Text('Veuillez patienter ...'),
+          ],
+        )
+      )
     );
   }
 
