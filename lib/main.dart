@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> clubName = [];
   List<Club> clubs = List();
-  String currentPage = 'blog';
+  int currentPage = 0;
 
 
   void initState() {
@@ -63,52 +63,17 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void managePage(String page) {
+  void managePage(int page) {
+    print("page received" + page.toString());
     this.setState(() {
       this.currentPage = page;
     });
 
-    print(this.currentPage);
-  }
-
-  Color setColor(String page) {
-    if (this.currentPage == page) {
-      return Color(0xff0a49a5);
-    } else {
-      return Color(0xffffffff);
-    }
-  }
-
-  Text setText(String page) {
-    if (page == this.currentPage) {
-      if (page == "result") {
-        return (Text("Résultats", 
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-        ));
-      } else {
-        return (Text("Blog du FCM", 
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-        ));
-      }
-    } else {
-      if (page == "result") {
-        return (Text("Résultats", 
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.black),
-        ));
-      } else {
-        return (Text("Blog du FCM", 
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.black),
-        ));
-      }
-    }
   }
 
   Container displayContent() {
-    if (this.currentPage == "result") {
+
+    if (this.currentPage == 1) {
       return (
         Container(
           height: 300,
@@ -161,49 +126,26 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 0.5
-                    )
-                  )
-                ),
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () { this.managePage('blog'); },
-                        child: Container(
-                          color: this.setColor('blog'),
-                          child: Center(
-                            child: this.setText('blog')
-                          )
-                        ),                        
-                      )
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () { this.managePage('result'); },
-                        child: Container(
-                          color: this.setColor('result'),
-                          child: Center(
-                            child: this.setText('result')
-                          )
-                        ),                        
-                      )
-                    )
-                  ],
-                )
-              ),
               SizedBox(height: 50),
               this.displayContent()
             ],
           )
-        ),// This trailing comma makes auto-formatting nicer for build methods.
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items:  const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.article),
+              label: 'Articles'
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.sports_soccer),
+              label: 'Résultats'
+            )
+          ],
+          selectedItemColor: Color(0xff0a49a5),
+          currentIndex: this.currentPage,
+          onTap: this.managePage,
+        ),
       );
     }
     
