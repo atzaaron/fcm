@@ -14,9 +14,13 @@ class _Articles extends State<Articles> {
 
   @override
   Widget build(BuildContext build) {
-    return Container(
-        height: 300,
-        child: Text('Do the articles part')
+    return Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('La partie Articles n\'est pas encore disponible.')
+          ],
+        )
     );
   }
 }

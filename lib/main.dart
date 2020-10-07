@@ -83,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 50),
             this.displayContent()
           ],
         )
