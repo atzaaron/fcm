@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'club.dart';
+import 'admin_page.dart';
 
 
 void main() => runApp(MyApp());
@@ -33,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> clubName = [];
   List<Club> clubs = List();
+  int currentPage = 0;
+
 
   void initState() {
     super.initState();
@@ -60,6 +63,36 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void managePage(int page) {
+    print("page received" + page.toString());
+    this.setState(() {
+      this.currentPage = page;
+    });
+
+  }
+
+  Container displayContent() {
+
+    if (this.currentPage == 1) {
+      return (
+        Container(
+          height: 300,
+          child: ListView.builder(
+            itemCount: this.clubName.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(this.clubName[index]);
+            },
+          ),
+        )
+      );
+    } else {
+      return Container(
+        height: 300,
+        child: Text('Do the blog part')
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (this.clubName.length > 0) {
@@ -68,34 +101,51 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           centerTitle: true,
           backgroundColor: Color(0xff0a49a5),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () { print("to do Accès administrateur");},
-              icon: Icon(Icons.settings),
-              color: Colors.white,
-            )
-          ],
         ),
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text("Développeur: Aaron Centeno"),
-                accountEmail: Text("Contact: aaron.centeno@outlook.com")
+                accountEmail: Text("Contact: aaron.centeno@outlook.com"),
+                currentAccountPicture: CircleAvatar(
+                  child: Image.asset('assets/images/logo_fcm.jpg'),
+                ),
+              ),
+              ListTile(
+                title: Text('Accès administrateur'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (BuildContext context) => new AdminPage() 
+                  ));
+                }
               )
             ],
           ),
         ),
         body: Center(
-          child: Card(
-            child: ListView.builder(
-              itemCount: this.clubName.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(this.clubName[index]);
-              },
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 50),
+              this.displayContent()
+            ],
+          )
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items:  const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.article),
+              label: 'Articles'
             ),
-          ),
-        ),// This trailing comma makes auto-formatting nicer for build methods.
+            BottomNavigationBarItem(
+              icon: Icon(Icons.sports_soccer),
+              label: 'Résultats'
+            )
+          ],
+          selectedItemColor: Color(0xff0a49a5),
+          currentIndex: this.currentPage,
+          onTap: this.managePage,
+        ),
       );
     }
     
