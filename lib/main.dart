@@ -65,8 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
             UserAccountsDrawerHeader(
               accountName: Text("Développeur: Aaron Centeno"),
               accountEmail: Text("Contact: aaron.centeno@outlook.com"),
+              decoration: BoxDecoration(
+                color: Color(0xff0950b5),
+              ),
               currentAccountPicture: CircleAvatar(
-                child: Image.asset('assets/images/logo_fcm.jpg'),
+                child: Image.asset('assets/images/logo_fcm.png'),
+                backgroundColor: Color(0xff0950b5),
+                
               ),
             ),
             ListTile(
