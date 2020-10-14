@@ -2,25 +2,24 @@
 
 class Club {
   String name;
-  int points;
-  int matchesPlayed;
-  int victories;
-  int draws;
-  int defeats;
-  int goalFor;
-  int goalAgainst;
-  int goalDifference;
+  String points;
+  String matchesPlayed;
+  String victories;
+  String draws;
+  String defeats;
+  String goalFor;
+  String goalAgainst;
+  String goalDifference;
 
-
-  Club(String name, int points, int matchesPlayed, int victories, int draws, int defeats, int goalFor, int goalAgainst, int goalDifference) {
+  Club(String name) {
     this.name = name;
-    this.points = points;
-    this.matchesPlayed = matchesPlayed;
-    this.victories = victories;
-    this.draws = draws;
-    this.defeats = defeats;
-    this.goalFor = goalFor;
-    this.goalAgainst = goalAgainst;
-    this.goalDifference = goalDifference;
+    this.points = "-1";
+    this.matchesPlayed = "-1";
+    this.victories = "-1";
+    this.draws = "-1";
+    this.defeats = "-1";
+    this.goalFor = "-1";
+    this.goalAgainst = "-1";
+    this.goalDifference = "-1";
   }
 }

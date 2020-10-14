@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'standings.dart';
 
 
 class Results extends StatefulWidget {
@@ -20,11 +21,12 @@ class _ResultsState extends State<Results> {
 
   void initState() {
     super.initState();
-    this.fetchClub().then((clubName) {
-      setState(() {
-        this.clubName = clubName;
-      });
-    });
+    // this.fetchClub().then((clubName) {
+    //   setState(() {
+    //     this.clubName = clubName;
+    //   });
+    // });
+    
   }
 
 
@@ -34,10 +36,8 @@ class _ResultsState extends State<Results> {
   
     if (await webScraper.loadWebPage('/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1')) {
         List<Map<String, dynamic>> elements = webScraper.getElement('table.ranking-tab > tbody > tr > td.ranking-tab-bold', []);
-        // print(elements);
         elements.forEach((name) {
           if (!isNumeric(name['title'][0])) {
-            // this.clubs.add()
             clubName.add(name['title']);
           }
         });
@@ -47,9 +47,14 @@ class _ResultsState extends State<Results> {
 
   @override
   Widget build(BuildContext build) {
-    if (this.clubName.length > 0) {
+    if (this.clubName.length == 0) {
       return (
-        this.setChoicesTab()
+        Column (
+          children: [
+            this.setChoicesTab(),
+            Standings()
+          ],
+        )
         // Container(
         //   height: 300,
         //   child: ListView.builder(
