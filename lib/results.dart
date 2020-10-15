@@ -18,20 +18,13 @@ class _ResultsState extends State<Results> {
   List<String> clubName = [];
   int _team = 1;
   int _competition = 1;
+  String urlChampionship = '/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1';
 
-  void initState() {
-    super.initState();
-    // this.fetchClub().then((clubName) {
-    //   setState(() {
-    //     this.clubName = clubName;
-    //   });
-    // });
-    
+
+  _ResultsState() {
   }
 
-
   Future fetchClub() async {
-    List<String> clubName = List();
     final webScraper = WebScraper('https://districtfootgers.fff.fr');
   
     if (await webScraper.loadWebPage('/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1')) {
@@ -52,7 +45,7 @@ class _ResultsState extends State<Results> {
         Column (
           children: [
             this.setChoicesTab(),
-            Standings()
+            Standings(championship: this.urlChampionship),
           ],
         )
         // Container(
@@ -110,10 +103,22 @@ class _ResultsState extends State<Results> {
                         DropdownMenuItem(
                           child: Text("Équipe 1", style: TextStyle(color: Colors.white)),
                           value: 1,
+                          onTap: () {
+                            this.setState(() {
+                              print("changed state d1");
+                              this.urlChampionship = "/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1";
+                            });
+                          }
                         ),
                         DropdownMenuItem(
                           child: Text("Équipe 2", style: TextStyle(color: Colors.white)),
                           value: 2,
+                          onTap: () {
+                            this.setState(() {
+                              print("changed state d2");
+                              this.urlChampionship = "/competitions/?id=378494&poule=1&phase=1&type=ch&tab=ranking";
+                            });
+                          }
                         ),
                         DropdownMenuItem(
                           child: Text("Équipe 3", style: TextStyle(color: Colors.white)),

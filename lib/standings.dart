@@ -6,7 +6,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Standings extends StatefulWidget {
 
-  Standings({Key key}) : super(key: key);
+  final String championship;
+  Standings({Key key, @required this.championship}) : super(key: key);
 
   @override
   _Standings createState() => _Standings();
@@ -16,26 +17,19 @@ class Standings extends StatefulWidget {
 class _Standings extends State<Standings> {
 
   List<Club> clubs = [];
-
-  void initState() {
-    super.initState();
-    this.fetchClub().then((clubName) {
-      setState(() {
-        // this.clubName = clubName;
-      });
-    });
-  }
+  String urlChampionship = "";
 
   Future fetchClub() async {
     final webScraper = WebScraper('https://districtfootgers.fff.fr');
-    String championnatD1 = '/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1';
-    String championnatD2 = '/competitions/?id=378494&poule=1&phase=1&type=ch&tab=ranking';
 
-    if (await webScraper.loadWebPage(championnatD2)) {
+    print(widget.championship);
+    if (await webScraper.loadWebPage(widget.championship)) {
       List<Map<String, dynamic>> nameAndPoints = webScraper.getElement('table.ranking-tab > tbody > tr > td.ranking-tab-bold', []);
       List<Map<String, dynamic>> details = webScraper.getElement('table.ranking-tab > tbody > tr > td.ranking-tab-content', []);
-
       Club tmpClub;
+      int indexClub = 0;
+
+      this.urlChampionship = widget.championship;
       nameAndPoints.asMap().forEach((index, value) {
         //find name & points of the team
         if (index % 2 == 0) {
@@ -46,7 +40,6 @@ class _Standings extends State<Standings> {
         }
       });
 
-      int indexClub = 0;
       details.asMap().forEach((index, value) { 
         //find the details of each club
         String indexString = index.toString();
@@ -72,6 +65,7 @@ class _Standings extends State<Standings> {
       });
 
       this.clubs.asMap().forEach((index, club) { 
+        print("DEBUG");
         print("Nom du club: " + club.name);
         print("Classement: " + (index + 1).toString());
         print("Matchs joués: " + club.matchesPlayed);
@@ -88,8 +82,11 @@ class _Standings extends State<Standings> {
 
   @override
   Widget build(BuildContext build) {
+    this.clubs.removeRange(0, this.clubs.length);
+    this.fetchClub();
     return (
-      Container()
+      Container(
+      )
     );
   }
 }
