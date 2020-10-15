@@ -15,28 +15,10 @@ class Results extends StatefulWidget {
 
 class _ResultsState extends State<Results> {
 
-  List<String> clubName = [];
   int _team = 1;
   int _competition = 1;
   String urlChampionship = '/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1';
 
-
-  _ResultsState() {
-  }
-
-  Future fetchClub() async {
-    final webScraper = WebScraper('https://districtfootgers.fff.fr');
-  
-    if (await webScraper.loadWebPage('/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1')) {
-        List<Map<String, dynamic>> elements = webScraper.getElement('table.ranking-tab > tbody > tr > td.ranking-tab-bold', []);
-        elements.forEach((name) {
-          if (!isNumeric(name['title'][0])) {
-            clubName.add(name['title']);
-          }
-        });
-        return clubName;
-    }
-  }
 
   @override
   Widget build(BuildContext build) {
@@ -73,13 +55,6 @@ class _ResultsState extends State<Results> {
         )
       )
     );
-  }
-
-  bool isNumeric(String s) {
-    if(s == null) {
-      return false;
-    }
-    return double.tryParse(s) != null;
   }
 
   Column setChoicesTab() {
