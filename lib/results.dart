@@ -122,8 +122,14 @@ class _ResultsState extends State<Results> {
                         ),
                         DropdownMenuItem(
                           child: Text("Équipe 3", style: TextStyle(color: Colors.white)),
-                          value: 3
-                        )
+                          value: 3,
+                          onTap: () {
+                            this.setState(() {
+                              print("changed state d3");
+                              this.urlChampionship = "/competitions/?id=378495&poule=1&phase=1&type=ch&tab=ranking";
+                            });
+                          }
+                        ),
                       ],
                       onChanged: (value) {
                         setState(() {
