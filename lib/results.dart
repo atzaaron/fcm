@@ -22,7 +22,6 @@ class _ResultsState extends State<Results> {
 
   @override
   Widget build(BuildContext build) {
-    if (this.clubName.length == 0) {
       return (
         Column (
           children: [
@@ -40,21 +39,20 @@ class _ResultsState extends State<Results> {
         //   ),
         // )
       );      
-    }
-    return (
-      Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SpinKitDoubleBounce(
-              color: Color(0xff0a49a5)
-            ),
-            SizedBox(height: 20),
-            Text('Veuillez patienter ...'),
-          ],
-        )
-      )
-    );
+    // return (
+    //   Expanded(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         SpinKitDoubleBounce(
+    //           color: Color(0xff0a49a5)
+    //         ),
+    //         SizedBox(height: 20),
+    //         Text('Veuillez patienter ...'),
+    //       ],
+    //     )
+    //   )
+    // );
   }
 
   Column setChoicesTab() {
@@ -80,7 +78,6 @@ class _ResultsState extends State<Results> {
                           value: 1,
                           onTap: () {
                             this.setState(() {
-                              print("changed state d1");
                               this.urlChampionship = "/recherche-clubs/?scl=16183&tab=resultats&subtab=ranking&competition=379649&stage=1&group=1&label=D1";
                             });
                           }
@@ -90,7 +87,6 @@ class _ResultsState extends State<Results> {
                           value: 2,
                           onTap: () {
                             this.setState(() {
-                              print("changed state d2");
                               this.urlChampionship = "/competitions/?id=378494&poule=1&phase=1&type=ch&tab=ranking";
                             });
                           }
@@ -100,7 +96,6 @@ class _ResultsState extends State<Results> {
                           value: 3,
                           onTap: () {
                             this.setState(() {
-                              print("changed state d3");
                               this.urlChampionship = "/competitions/?id=378495&poule=1&phase=1&type=ch&tab=ranking";
                             });
                           }
