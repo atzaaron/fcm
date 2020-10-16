@@ -2,6 +2,7 @@
 
 class Club {
   String name;
+  String standing;
   String points;
   String matchesPlayed;
   String victories;
@@ -13,6 +14,7 @@ class Club {
 
   Club(String name) {
     this.name = name;
+    this.standing = "-1";
     this.points = "-1";
     this.matchesPlayed = "-1";
     this.victories = "-1";
